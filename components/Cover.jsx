@@ -16,10 +16,10 @@ const rise = {
 export default function Cover() {
   return (
     <section className="cover">
-      <Botanical side="left" width={230} style={{ top: -20, left: -60 }} />
-      <Botanical side="right" width={230} style={{ top: -30, right: -60 }} />
-      <Botanical side="right" width={210} style={{ bottom: -30, left: -50 }} flip />
-      <Botanical side="left" width={210} style={{ bottom: -40, right: -50 }} flip />
+      <Botanical side="left" width="clamp(150px, 44vw, 230px)" style={{ top: -20, left: -55 }} />
+      <Botanical side="right" width="clamp(150px, 44vw, 230px)" style={{ top: -30, right: -55 }} />
+      <Botanical side="right" width="clamp(108px, 31vw, 175px)" style={{ bottom: -22, left: -42 }} flip />
+      <Botanical side="left" width="clamp(108px, 31vw, 175px)" style={{ bottom: -28, right: -42 }} flip />
 
       <div className="inner">
         <motion.div className="cover-monogram" custom={0} variants={rise} initial="hidden" animate="show">
