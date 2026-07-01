@@ -40,10 +40,7 @@ export default function Venue({ venue, photo, side = "left", showPhoto = false }
           </p>
 
           <div className="venue-meta">
-            <span className="chip">
-              {venue.time.split(" ")[0]}
-              <span style={{ fontSize: "0.65rem", opacity: 0.8 }}>hs</span>
-            </span>
+            <span className="chip">{venue.time}</span>
           </div>
 
           <a href={venue.mapUrl} target="_blank" rel="noopener noreferrer" className="btn btn-solid">

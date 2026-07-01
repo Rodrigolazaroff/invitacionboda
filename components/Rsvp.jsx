@@ -108,12 +108,14 @@ export default function Rsvp() {
                     </div>
 
                     <div className="field">
-                      <label htmlFor="restricciones">Restricciones alimentarias (opcional)</label>
-                      <input
-                        id="restricciones"
-                        name="restricciones"
-                        placeholder="Vegetariano, celíaco, etc."
-                      />
+                      <label htmlFor="restricciones">Menú / restricción alimentaria</label>
+                      <select id="restricciones" name="restricciones" defaultValue="Ninguna">
+                        {rsvp.mealOptions.map((opt) => (
+                          <option key={opt} value={opt}>
+                            {opt}
+                          </option>
+                        ))}
+                      </select>
                     </div>
                   </>
                 )}

@@ -275,51 +275,56 @@ section {
   margin: 1.6rem 0;
 }
 .venue-meta .chip {
-  border: 1px solid rgba(129,160,98,0.3);
-  border-radius: 12px;
-  padding: 0.5rem 1rem;
-  color: var(--sage);
+  border: 1px solid rgba(129,160,98,0.35);
+  border-radius: 999px;
+  padding: 0.5rem 1.5rem;
+  color: var(--olive);
   font-weight: 700;
-  font-size: 0.8rem;
-  letter-spacing: 0.06em;
-  display: flex; flex-direction: column; gap: 0.15rem; align-items: center;
-  min-width: 84px;
+  font-size: 1.05rem;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
 }
-.venue-meta .chip b { color: var(--olive); font-size: 1.1rem; }
 
 /* ============================================================
    ITINERARIO
    ============================================================ */
-.timeline {
-  max-width: 340px;
-  margin: 2.5rem auto 0;
+/* Timeline centrado en zigzag: item a la derecha, el siguiente a la izquierda */
+.timeline-alt {
   position: relative;
+  max-width: 560px;
+  margin: 2.6rem auto 0;
 }
-.tl-item {
-  display: grid;
-  grid-template-columns: 54px 1fr;
-  gap: 1.1rem;
-  align-items: center;
-  padding: 0.65rem 0;
-  position: relative;
-}
-.tl-icon {
-  width: 54px; height: 54px;
-  display: grid; place-items: center;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.6);
-  border: 1px solid rgba(129,160,98,0.35);
-  color: var(--olive);
-}
-.tl-item:not(:last-child) .tl-icon::after {
+.timeline-alt::before {
   content: "";
   position: absolute;
-  left: 26px; top: 54px;
-  width: 1px; height: calc(100% - 22px);
-  background: linear-gradient(var(--sage-soft), transparent);
+  left: 50%; top: 22px; bottom: 22px;
+  width: 1px;
+  transform: translateX(-50%);
+  background: var(--sage-soft);
+  opacity: 0.6;
 }
-.tl-time { color: var(--olive); font-weight: 700; font-size: 1.05rem; }
-.tl-label { color: var(--sage); font-size: 0.9rem; }
+.tl-row {
+  display: grid;
+  grid-template-columns: 1fr 60px 1fr;
+  align-items: center;
+  margin: 0.35rem 0;
+}
+.tl-side { min-width: 0; }
+.tl-side.left { text-align: right; padding-right: 0.9rem; }
+.tl-side.right { text-align: left; padding-left: 0.9rem; }
+.tl-node {
+  width: 56px; height: 56px;
+  margin: 0 auto;
+  display: grid; place-items: center;
+  border-radius: 50%;
+  background: var(--cream);
+  border: 1px solid rgba(129, 160, 98, 0.4);
+  color: var(--olive);
+  position: relative;
+  z-index: 1;
+}
+.tl-time { color: var(--olive); font-weight: 700; font-size: 1.05rem; white-space: nowrap; }
+.tl-label { color: var(--sage); font-size: 0.88rem; }
 
 .dresscode {
   text-align: center;
@@ -327,6 +332,14 @@ section {
   display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
 }
 .dresscode .dc-icon { color: var(--olive); }
+.dresscode .dc-icons {
+  display: flex;
+  gap: 0.9rem;
+  align-items: flex-end;
+  justify-content: center;
+  color: var(--olive);
+  margin-bottom: 0.3rem;
+}
 .dresscode .dc-note { color: var(--sage); letter-spacing: 0.22em; text-transform: uppercase; font-size: 0.7rem; font-weight: 700; }
 .dresscode .dc-value { color: var(--olive); font-size: 1.4rem; font-weight: 600; }
 
@@ -407,19 +420,39 @@ section {
 /* ============================================================
    GALERÍA
    ============================================================ */
-.gallery {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: clamp(0.5rem, 2vw, 0.9rem);
+/* Carrusel en movimiento continuo (marquee) */
+.gallery-section { padding-left: 0; padding-right: 0; overflow: hidden; }
+.marquee {
+  width: 100%;
+  overflow: hidden;
   margin-top: 2.4rem;
+  -webkit-mask: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  mask: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
 }
-.gallery img {
-  width: 100%; aspect-ratio: 3 / 4; object-fit: cover;
-  border-radius: 14px; cursor: pointer;
-  box-shadow: 0 16px 34px -24px rgba(71,90,41,0.5);
-  transition: transform 0.5s var(--ease), filter 0.5s var(--ease);
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee-scroll 42s linear infinite;
 }
-.gallery img:hover { transform: translateY(-4px) scale(1.01); filter: saturate(1.05); }
+.marquee:hover .marquee-track { animation-play-state: paused; }
+.marquee img {
+  height: clamp(240px, 62vw, 340px);
+  width: auto;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  border-radius: 16px;
+  margin-right: 1rem;
+  flex: 0 0 auto;
+  cursor: pointer;
+  user-select: none;
+  box-shadow: 0 16px 34px -24px rgba(71, 90, 41, 0.5);
+  transition: transform 0.4s var(--ease), filter 0.4s var(--ease);
+}
+.marquee img:hover { transform: translateY(-5px); filter: saturate(1.05); }
+@keyframes marquee-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
 
 /* Lightbox */
 .lightbox {

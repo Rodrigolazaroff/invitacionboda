@@ -18,30 +18,37 @@ export default function Gallery() {
 
   if (!gallery?.length) return null;
 
+  // Duplicamos las fotos para lograr un desplazamiento infinito y sin cortes.
+  const loop = [...gallery, ...gallery];
+
   return (
-    <section>
-      <div className="inner" style={{ textAlign: "center" }}>
+    <section className="gallery-section">
+      <div className="inner" style={{ textAlign: "center", padding: "0 1.5rem" }}>
         <Reveal>
           <p className="kicker">Nuestros momentos</p>
           <h2 className="section-title" style={{ marginTop: "0.5rem" }}>
             Galería
           </h2>
+          <div className="divider">❦</div>
         </Reveal>
+      </div>
 
-        <Reveal delay={0.1}>
-          <div className="gallery">
-            {gallery.map((img, i) => (
+      <Reveal delay={0.1}>
+        <div className="marquee">
+          <div className="marquee-track">
+            {loop.map((img, i) => (
               <img
                 key={i}
                 src={img.src}
                 alt={img.alt || "Foto"}
                 loading="lazy"
+                draggable={false}
                 onClick={() => setOpen(img.src)}
               />
             ))}
           </div>
-        </Reveal>
-      </div>
+        </div>
+      </Reveal>
 
       <AnimatePresence>
         {open && (
