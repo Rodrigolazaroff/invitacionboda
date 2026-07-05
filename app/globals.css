@@ -21,6 +21,7 @@
   --gold: #b99b6b;
 
   --maxw: 680px;
+  --card-max: 460px;      /* ancho de la "tarjeta" en PC/iPad (look de celular) */
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
@@ -75,9 +76,19 @@ body {
 /* ---------- Layout ---------- */
 .shell {
   position: relative;
-  max-width: 940px;
+  max-width: var(--card-max);
   margin: 0 auto;
   min-height: 100dvh;
+}
+
+/* En PC / iPad la invitación se muestra como una tarjeta centrada, con el
+   fondo decorativo alrededor. En celular ocupa todo el ancho (sin cambios). */
+@media (min-width: 540px) {
+  body { background-color: var(--cream-deep); }
+  .shell {
+    background-color: var(--cream);
+    box-shadow: 0 24px 80px -34px rgba(71, 90, 41, 0.4);
+  }
 }
 
 section {
@@ -622,10 +633,11 @@ section {
   50% { opacity: 1; }
 }
 /* video del sobre abriéndose (pantalla de inicio) */
-.envelope-overlay.video-mode { background: #000; }
+.envelope-overlay.video-mode { background: var(--cream-deep); }
 .env-video {
   width: 100%;
   height: 100%;
+  max-width: var(--card-max);   /* en PC/iPad el video queda en la columna, no a pantalla completa */
   object-fit: cover;
   display: block;
 }
@@ -633,7 +645,8 @@ section {
 /* botón flotante para silenciar / activar la música */
 .music-toggle {
   position: fixed;
-  right: clamp(1rem, 4vw, 1.5rem);
+  /* pegado al borde derecho de la tarjeta (en PC/iPad); en celular queda en la esquina */
+  right: max(1rem, calc((100vw - var(--card-max)) / 2 + 1rem));
   bottom: clamp(1rem, 4vw, 1.5rem);
   z-index: 150;
   width: 44px; height: 44px;
