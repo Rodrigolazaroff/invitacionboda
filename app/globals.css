@@ -260,7 +260,7 @@ section {
 .date-chips > div {
   flex: 1 0 0;
   padding: 0.5rem 1rem;
-  border-left: 1px solid var(--sage-soft);
+  position: relative;
   color: var(--olive);
   font-weight: 700;
   font-size: 0.82rem;
@@ -270,7 +270,17 @@ section {
   text-align: center;
   white-space: nowrap;
 }
-.date-chips > div:first-child { border-left: none; }
+.date-chips > div::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1px;
+  height: 40px;
+  background: var(--sage-soft);
+}
+.date-chips > div:first-child::before { display: none; }
 
 /* ============================================================
    COUNTDOWN

@@ -12,8 +12,8 @@ import Closing from "@/components/Closing";
 import { photos } from "@/lib/data";
 
 // Secuencia pedida:
-// 1. logo (Cover) → 2. foto + countdown → 3. iglesia → 4. ceremonia y fiesta
-// → 5. itinerario → 6+6.5. confirmación → 7. galería → 8. regalos → 9. cierre
+// 1. Cover → 2. Foto + Countdown → 3. Iglesia → 4. Ceremonia y Fiesta
+// → 5. Itinerario → 6. Regalos → 7+7.5. Confirmación → 8. Galería → 9. Cierre
 export default function Home() {
   return (
     <main className="shell">
@@ -24,9 +24,9 @@ export default function Home() {
       <ChurchSection />
       <PartySection />
       <Itinerary />
+      <Gifts />
       <Rsvp />
       <Gallery />
-      <Gifts />
       <Closing />
     </main>
   );
