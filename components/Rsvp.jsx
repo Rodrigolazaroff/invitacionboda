@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Heart, Send, Loader2 } from "lucide-react";
+import { Heart, Send, Loader2, Plus, X } from "lucide-react";
 import { motion } from "framer-motion";
 import Reveal from "./Reveal";
 import { rsvp } from "@/lib/data";
@@ -13,22 +13,41 @@ const florAnim = {
   transition: { duration: 1.2, ease: [0.22, 1, 0.36, 1] },
 };
 
+const personaVacia = () => ({ nombre: "", asiste: "si", restriccion: "Ninguna" });
+const MAX_PERSONAS = 8;
+
 export default function Rsvp() {
   const [status, setStatus] = useState("idle"); // idle | loading | ok | error
-  const [attending, setAttending] = useState("si");
   const [invitadoDe, setInvitadoDe] = useState("novio");
+  const [personas, setPersonas] = useState([personaVacia()]);
+
+  function updatePersona(i, campo, valor) {
+    setPersonas((prev) => prev.map((p, idx) => (idx === i ? { ...p, [campo]: valor } : p)));
+  }
+  function addPersona() {
+    setPersonas((prev) => (prev.length >= MAX_PERSONAS ? prev : [...prev, personaVacia()]));
+  }
+  function removePersona(i) {
+    setPersonas((prev) => prev.filter((_, idx) => idx !== i));
+  }
+
+  // Estado de asistencia del grupo (para el mensaje final y el corazón)
+  const algunoAsiste = personas.some((p) => p.asiste === "si");
+  const todosAsisten = personas.every((p) => p.asiste === "si");
+  const nadieAsiste = personas.every((p) => p.asiste === "no");
 
   async function onSubmit(e) {
     e.preventDefault();
     setStatus("loading");
     const form = e.currentTarget;
     const payload = {
-      nombre: form.nombre.value.trim(),
       invitadoDe: invitadoDe === "novio" ? "Novio" : "Novia",
-      asiste: attending === "si" ? "Sí" : "No",
-      acompanantes: attending === "si" ? form.acompanantes.value : "0",
-      restricciones: attending === "si" ? form.restricciones.value : "",
       mensaje: form.mensaje.value.trim(),
+      personas: personas.map((p) => ({
+        nombre: p.nombre.trim(),
+        asiste: p.asiste === "si" ? "Sí" : "No",
+        restriccion: p.asiste === "si" ? p.restriccion : "",
+      })),
       fecha: new Date().toLocaleString("es-AR"),
     };
     const controller = new AbortController();
@@ -104,21 +123,23 @@ export default function Rsvp() {
           {status === "ok" ? (
             <Reveal>
               <div className="card rsvp-success">
-                {attending === "si" && (
+                {algunoAsiste && (
                   <Heart size={40} className="heart" fill="currentColor" />
                 )}
-                {attending === "si" ? (
-                  <>
-                    <h3 style={{ color: "var(--olive)", fontSize: "1.3rem" }}>¡Gracias por confirmar!</h3>
-                    <p style={{ color: "var(--sage)" }}>
-                      Recibimos tu respuesta. ¡Nos vemos el 12 de diciembre! 🌿
-                    </p>
-                  </>
-                ) : (
+                {nadieAsiste ? (
                   <>
                     <h3 style={{ color: "var(--olive)", fontSize: "1.3rem" }}>¡Gracias por avisarnos!</h3>
                     <p style={{ color: "var(--sage)" }}>
                       Lamentamos que no puedas acompañarnos. ¡Te vamos a extrañar!
+                    </p>
+                  </>
+                ) : (
+                  <>
+                    <h3 style={{ color: "var(--olive)", fontSize: "1.3rem" }}>
+                      {todosAsisten ? "¡Gracias por confirmar!" : "¡Gracias por tu respuesta!"}
+                    </h3>
+                    <p style={{ color: "var(--sage)" }}>
+                      Recibimos tu respuesta. ¡Nos vemos el 12 de diciembre! 🌿
                     </p>
                   </>
                 )}
@@ -127,11 +148,6 @@ export default function Rsvp() {
           ) : (
             <Reveal delay={0.1}>
               <form className="form card" onSubmit={onSubmit}>
-                <div className="field">
-                  <label htmlFor="nombre">Nombre y apellido</label>
-                  <input id="nombre" name="nombre" required placeholder="Tu nombre completo" />
-                </div>
-
                 <div className="field">
                   <label>Sos invitado de:</label>
                   <div className="radio-row">
@@ -158,56 +174,82 @@ export default function Rsvp() {
                   </div>
                 </div>
 
-                <div className="field">
-                  <label>¿Vas a asistir?</label>
-                  <div className="radio-row">
-                    <label>
+                {personas.map((p, i) => (
+                  <div className="persona-block" key={i}>
+                    <div className="persona-head">
+                      <span className="persona-num">Persona {i + 1}</span>
+                      {personas.length > 1 && (
+                        <button
+                          type="button"
+                          className="persona-remove"
+                          onClick={() => removePersona(i)}
+                          aria-label={`Quitar persona ${i + 1}`}
+                        >
+                          <X size={14} /> Quitar
+                        </button>
+                      )}
+                    </div>
+
+                    <div className="field">
+                      <label htmlFor={`nombre-${i}`}>Nombre y apellido</label>
                       <input
-                        type="radio"
-                        name="asiste"
-                        value="si"
-                        checked={attending === "si"}
-                        onChange={() => setAttending("si")}
+                        id={`nombre-${i}`}
+                        required
+                        placeholder="Nombre completo"
+                        value={p.nombre}
+                        onChange={(e) => updatePersona(i, "nombre", e.target.value)}
                       />
-                      <span>Sí, ahí estaré 🥂</span>
-                    </label>
-                    <label>
-                      <input
-                        type="radio"
-                        name="asiste"
-                        value="no"
-                        checked={attending === "no"}
-                        onChange={() => setAttending("no")}
-                      />
-                      <span>No podré ir</span>
-                    </label>
+                    </div>
+
+                    <div className="field">
+                      <label>¿Vas a asistir?</label>
+                      <div className="radio-row">
+                        <label>
+                          <input
+                            type="radio"
+                            name={`asiste-${i}`}
+                            value="si"
+                            checked={p.asiste === "si"}
+                            onChange={() => updatePersona(i, "asiste", "si")}
+                          />
+                          <span>Sí, ahí estaré 🥂</span>
+                        </label>
+                        <label>
+                          <input
+                            type="radio"
+                            name={`asiste-${i}`}
+                            value="no"
+                            checked={p.asiste === "no"}
+                            onChange={() => updatePersona(i, "asiste", "no")}
+                          />
+                          <span>No podré ir</span>
+                        </label>
+                      </div>
+                    </div>
+
+                    {p.asiste === "si" && (
+                      <div className="field">
+                        <label htmlFor={`restriccion-${i}`}>Menú / restricción alimentaria</label>
+                        <select
+                          id={`restriccion-${i}`}
+                          value={p.restriccion}
+                          onChange={(e) => updatePersona(i, "restriccion", e.target.value)}
+                        >
+                          {rsvp.mealOptions.map((opt) => (
+                            <option key={opt} value={opt}>
+                              {opt}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    )}
                   </div>
-                </div>
+                ))}
 
-                {attending === "si" && (
-                  <>
-                    <div className="field">
-                      <label htmlFor="acompanantes">Cantidad de personas (incluyéndote)</label>
-                      <select id="acompanantes" name="acompanantes" defaultValue="1">
-                        {[1, 2, 3, 4, 5].map((n) => (
-                          <option key={n} value={n}>
-                            {n}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-
-                    <div className="field">
-                      <label htmlFor="restricciones">Menú / restricción alimentaria</label>
-                      <select id="restricciones" name="restricciones" defaultValue="Ninguna">
-                        {rsvp.mealOptions.map((opt) => (
-                          <option key={opt} value={opt}>
-                            {opt}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                  </>
+                {personas.length < MAX_PERSONAS && (
+                  <button type="button" className="add-persona" onClick={addPersona}>
+                    <Plus size={16} /> Agregar otra persona
+                  </button>
                 )}
 
                 <div className="field">

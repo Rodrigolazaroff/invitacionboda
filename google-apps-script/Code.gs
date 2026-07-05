@@ -15,7 +15,7 @@
  * La primera vez te va a pedir autorizar permisos: aceptá.
  */
 
-var HEADERS = ["Fecha", "Invitado de", "Nombre", "Asiste", "Acompañantes", "Restricciones", "Mensaje"];
+var HEADERS = ["Fecha", "Grupo", "Nombre", "Invitado de", "Asiste", "Restricción", "Mensaje"];
 
 function doPost(e) {
   try {
@@ -28,15 +28,33 @@ function doPost(e) {
       sheet.getRange(1, 1, 1, HEADERS.length).setFontWeight("bold");
     }
 
-    sheet.appendRow([
-      data.fecha || new Date().toLocaleString("es-AR"),
-      data.invitadoDe || "",
-      data.nombre || "",
-      data.asiste || "",
-      data.acompanantes || "",
-      data.restricciones || "",
-      data.mensaje || "",
-    ]);
+    var fecha = data.fecha || new Date().toLocaleString("es-AR");
+    var grupo = data.grupo || "";
+    var invitadoDe = data.invitadoDe || "";
+    var mensaje = data.mensaje || "";
+    var personas = Array.isArray(data.personas) ? data.personas : [];
+
+    // Compatibilidad con envíos viejos (un solo invitado, sin "personas")
+    if (personas.length === 0 && data.nombre) {
+      personas = [{
+        nombre: data.nombre,
+        asiste: data.asiste,
+        restriccion: data.restricciones || data.restriccion,
+      }];
+    }
+
+    // Una fila por persona, todas con el mismo Grupo, Fecha y Mensaje
+    personas.forEach(function (p) {
+      sheet.appendRow([
+        fecha,
+        grupo,
+        p.nombre || "",
+        invitadoDe,
+        p.asiste || "",
+        p.restriccion || "",
+        mensaje,
+      ]);
+    });
 
     return ContentService
       .createTextOutput(JSON.stringify({ ok: true }))

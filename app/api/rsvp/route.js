@@ -11,20 +11,32 @@ export async function POST(request) {
     return Response.json({ ok: false, error: "JSON inválido" }, { status: 400 });
   }
 
-  const nombre = (data?.nombre || "").toString().trim();
-  if (!nombre) {
+  // Normaliza la lista de personas (una fila por cada una en la planilla)
+  const personas = (Array.isArray(data?.personas) ? data.personas : [])
+    .map((p) => ({
+      nombre: (p?.nombre || "").toString().trim(),
+      asiste: (p?.asiste || "").toString(),
+      restriccion: (p?.restriccion || "").toString(),
+    }))
+    .filter((p) => p.nombre);
+
+  if (personas.length === 0) {
     return Response.json({ ok: false, error: "Falta el nombre" }, { status: 400 });
   }
 
+  // Código único por envío: agrupa en la planilla a quienes confirman juntos
+  const grupo =
+    "g-" +
+    (globalThis.crypto?.randomUUID?.().slice(0, 4) ??
+      Math.random().toString(16).slice(2, 6));
+
   // Payload limpio hacia la planilla
   const row = {
-    nombre,
-    invitadoDe: (data.invitadoDe || "").toString(),
-    asiste: (data.asiste || "").toString(),
-    acompanantes: (data.acompanantes || "").toString(),
-    restricciones: (data.restricciones || "").toString(),
-    mensaje: (data.mensaje || "").toString(),
     fecha: (data.fecha || new Date().toLocaleString("es-AR")).toString(),
+    grupo,
+    invitadoDe: (data.invitadoDe || "").toString(),
+    mensaje: (data.mensaje || "").toString(),
+    personas,
   };
 
   const webhook = process.env.RSVP_SHEET_WEBHOOK;

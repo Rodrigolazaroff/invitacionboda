@@ -462,6 +462,37 @@ section {
 }
 .rsvp-success .heart { color: var(--sage); }
 
+/* Bloques por persona (RSVP multi-invitado) */
+.persona-block {
+  display: flex; flex-direction: column; gap: 0.9rem;
+  border: 1px solid rgba(129,160,98,0.28); border-radius: 16px;
+  padding: 1.1rem 1rem;
+  background: rgba(255,255,255,0.35);
+}
+.persona-head { display: flex; align-items: center; justify-content: space-between; }
+.persona-num {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--olive); font-weight: 700;
+}
+.persona-remove {
+  display: inline-flex; align-items: center; gap: 0.25rem;
+  background: none; border: none; cursor: pointer; padding: 0.2rem;
+  color: #a4553a; font-family: inherit; font-weight: 700;
+  font-size: 0.66rem; letter-spacing: 0.08em; text-transform: uppercase;
+  transition: opacity 0.2s;
+}
+.persona-remove:hover { opacity: 0.65; }
+.add-persona {
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.4rem;
+  width: 100%; cursor: pointer; font-family: inherit;
+  border: 1px dashed rgba(129,160,98,0.5); border-radius: 12px;
+  background: none; color: var(--sage); padding: 0.85rem;
+  font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 700;
+  transition: all 0.25s;
+}
+.add-persona:hover { background: rgba(129,160,98,0.08); border-color: var(--sage); }
+
 /* ============================================================
    REGALOS
    ============================================================ */
