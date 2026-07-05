@@ -147,6 +147,7 @@ export default function Rsvp() {
             </Reveal>
           ) : (
             <Reveal delay={0.1}>
+              <div className="form-wrap">
               <form className="form card" onSubmit={onSubmit}>
                 <div className="field">
                   <label>Sos invitado de:</label>
@@ -280,6 +281,13 @@ export default function Rsvp() {
                   </p>
                 )}
               </form>
+              {status === "loading" && (
+                <div className="form-loading" aria-live="polite">
+                  <div className="spinner-ring" />
+                  <p>Enviando tu confirmación…</p>
+                </div>
+              )}
+              </div>
             </Reveal>
           )}
         </div>
@@ -292,6 +300,37 @@ export default function Rsvp() {
             to {
               transform: rotate(360deg);
             }
+          }
+          .form-wrap {
+            position: relative;
+          }
+          .form-loading {
+            position: absolute;
+            inset: 0;
+            border-radius: 20px;
+            background: rgba(247, 245, 240, 0.82);
+            backdrop-filter: blur(2px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 1.1rem;
+            z-index: 5;
+          }
+          .spinner-ring {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            border: 4px solid rgba(129, 160, 98, 0.25);
+            border-top-color: var(--olive);
+            animation: spin 0.85s linear infinite;
+          }
+          .form-loading p {
+            color: var(--olive);
+            font-weight: 700;
+            font-size: 0.8rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
           }
         `}</style>
       </section>
