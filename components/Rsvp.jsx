@@ -89,7 +89,10 @@ export default function Rsvp() {
           </Reveal>
 
           <Reveal delay={0.05}>
-            <p className="rsvp-intro">{rsvp.intro}</p>
+            <p className="rsvp-intro">
+              {rsvp.intro.replace("¡Gracias por comprender!", "").trim()}{" "}
+              <span style={{ whiteSpace: "nowrap" }}>¡Gracias por comprender!</span>
+            </p>
             <p className="rsvp-deadline">Por favor, confirmá antes del {rsvp.deadlineLabel}.</p>
           </Reveal>
         </div>
