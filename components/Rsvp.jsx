@@ -75,14 +75,14 @@ export default function Rsvp() {
           draggable={false}
           className="sprig"
           style={{
-            bottom: -10,
+            bottom: 20,
             right: -10,
             width: "clamp(140px, 38vw, 210px)",
           }}
           {...florAnim}
         />
 
-        <div className="inner" style={{ padding: "3.5rem 2rem 1.5rem" }}>
+        <div className="inner" style={{ padding: "3.5rem 2rem 5rem" }}>
           <Reveal>
             <h2 className="section-title">Confirmación de asistencia</h2>
             <div className="divider">❦</div>

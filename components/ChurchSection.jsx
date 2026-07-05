@@ -39,7 +39,7 @@ export default function ChurchSection() {
         draggable={false}
         className="sprig"
         style={{
-          bottom: -10,
+          bottom: 20,
           right: -10,
           width: "clamp(140px, 38vw, 210px)",
         }}

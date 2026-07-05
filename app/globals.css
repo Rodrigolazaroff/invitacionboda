@@ -533,7 +533,7 @@ section {
 /* ============================================================
    CLOSING
    ============================================================ */
-.closing { text-align: center; }
+.closing { text-align: center; min-height: 100dvh; display: flex; flex-direction: column; align-items: center; justify-content: center; }
 .closing-photo {
   width: clamp(160px, 44vw, 240px); aspect-ratio: 3/4; object-fit: cover;
   border-radius: 999px; margin: 0 auto 2rem;
