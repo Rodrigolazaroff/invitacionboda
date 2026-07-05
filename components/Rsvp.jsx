@@ -212,7 +212,7 @@ export default function Rsvp() {
                             checked={p.asiste === "si"}
                             onChange={() => updatePersona(i, "asiste", "si")}
                           />
-                          <span>Sí, ahí estaré 🥂</span>
+                          <span>Sí, ahí estaré</span>
                         </label>
                         <label>
                           <input
@@ -229,7 +229,7 @@ export default function Rsvp() {
 
                     {p.asiste === "si" && (
                       <div className="field">
-                        <label htmlFor={`restriccion-${i}`}>Menú / restricción alimentaria</label>
+                        <label htmlFor={`restriccion-${i}`}>Restricción alimentaria</label>
                         <select
                           id={`restriccion-${i}`}
                           value={p.restriccion}
