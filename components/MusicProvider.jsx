@@ -81,7 +81,7 @@ export default function MusicProvider({ children }) {
         ref={audioRef}
         src="/assets/audio/ed_sheeran_thinking_out_loud.mp3"
         loop
-        preload="auto"
+        preload="none"
       />
       {children}
       {started && (
