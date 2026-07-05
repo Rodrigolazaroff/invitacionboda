@@ -2,17 +2,10 @@
 
 import { MapPin, Navigation } from "lucide-react";
 import Reveal from "./Reveal";
-import Botanical from "./Botanical";
 
 export default function Venue({ venue, photo, side = "left", showPhoto = false }) {
   return (
     <section>
-      {side === "left" ? (
-        <Botanical side="left" width={150} style={{ top: 20, left: -40, opacity: 0.85 }} />
-      ) : (
-        <Botanical side="right" width={150} style={{ top: 20, right: -40, opacity: 0.85 }} />
-      )}
-
       <div className="inner venue">
         {showPhoto && photo && (
           <Reveal>

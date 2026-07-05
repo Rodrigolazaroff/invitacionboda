@@ -4,15 +4,20 @@
    ============================================================ */
 
 :root {
-  --olive: #475a29;      /* verde oliva oscuro — nombres, títulos fuertes */
+  /* Paleta oficial de la diseñadora */
+  --olive: #475a29;       /* verde oliva oscuro — nombres, títulos fuertes */
   --olive-deep: #35441f;
-  --sage: #81a062;       /* verde salvia — textos, datos */
-  --sage-soft: #a9c090;
-  --blush: #e8b4a4;      /* durazno/blush — títulos script */
-  --blush-soft: #f7cbbe;
-  --cream: #f7f5f0;      /* fondo papel */
+  --sage: #81a062;        /* verde salvia — textos, datos */
+  --sage-soft: #a2c076;   /* verde claro */
+  --sage-pale: #bcc482;   /* verde amarillento suave */
+  --blush: #f7cbbe;       /* rosa durazno — títulos script */
+  --blush-soft: #fdeaf2;  /* rosa pálido */
+  --beige: #e2c09a;       /* beige medio — sobre */
+  --beige-soft: #f3e2c8;  /* beige claro — sobre */
+  --beige-deep: #e3c7a1;  /* beige tostado — sobre */
+  --cream: #f7f5f0;       /* fondo papel */
   --cream-deep: #efece3;
-  --ink: #3d4232;        /* texto base */
+  --ink: #3d4232;         /* texto base */
   --gold: #b99b6b;
 
   --maxw: 680px;
@@ -190,6 +195,15 @@ section {
   font-size: clamp(1.8rem, 7vw, 2.6rem);
   margin-top: 0.4rem;
 }
+/* "¡Nos casamos!" — Lato en verde (pedido de la diseñadora) */
+.nos-casamos {
+  font-family: var(--font-sans), sans-serif;
+  color: var(--sage);
+  font-size: clamp(1.05rem, 4.5vw, 1.4rem);
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  margin-top: 1.2rem;
+}
 .cover-names {
   font-family: var(--font-script), cursive;
   color: var(--olive);
@@ -283,11 +297,11 @@ section {
   margin-bottom: 2rem;
   box-shadow: 0 24px 50px -28px rgba(71,90,41,0.55);
 }
-.venue-title { color: var(--olive); font-size: 1.35rem; font-weight: 700; margin-top: 0.3rem; }
-.venue-address { color: var(--sage); margin-top: 0.4rem; }
+.venue-title { color: var(--olive); font-size: 1.35rem; font-weight: 700; margin-top: 1.2rem; }
+.venue-address { color: var(--sage); margin-top: 0.9rem; }
 .venue-meta {
   display: flex; gap: 1.2rem; justify-content: center; align-items: stretch;
-  margin: 1.6rem 0;
+  margin: 2.2rem 0;
 }
 .venue-meta .chip {
   border: 1px solid rgba(129,160,98,0.35);
@@ -320,15 +334,15 @@ section {
 }
 .tl-row {
   display: grid;
-  grid-template-columns: 1fr 60px 1fr;
+  grid-template-columns: 1fr 72px 1fr;
   align-items: center;
-  margin: 0.35rem 0;
+  margin: 1.4rem 0;
 }
 .tl-side { min-width: 0; }
 .tl-side.left { text-align: right; padding-right: 0.9rem; }
 .tl-side.right { text-align: left; padding-left: 0.9rem; }
 .tl-node {
-  width: 56px; height: 56px;
+  width: 68px; height: 68px;
   margin: 0 auto;
   display: grid; place-items: center;
   border-radius: 50%;
@@ -338,13 +352,24 @@ section {
   position: relative;
   z-index: 1;
 }
+.tl-node img {
+  width: 44px; height: 44px;
+  object-fit: contain;
+  display: block;
+}
 .tl-time { color: var(--olive); font-weight: 700; font-size: 1.05rem; white-space: nowrap; }
-.tl-label { color: var(--sage); font-size: 0.88rem; }
+.tl-label { color: var(--sage); font-size: 0.88rem; margin-top: 0.15rem; }
 
 .dresscode {
   text-align: center;
-  margin-top: 2.6rem;
+  margin-top: 4.5rem;
   display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+}
+.dresscode .dc-img {
+  width: clamp(130px, 36vw, 180px);
+  height: auto;
+  display: block;
+  margin-bottom: 0.4rem;
 }
 .dresscode .dc-icon { color: var(--olive); }
 .dresscode .dc-icons {
@@ -361,7 +386,7 @@ section {
 /* ============================================================
    RSVP
    ============================================================ */
-.rsvp-intro { text-align: center; color: var(--sage); max-width: 440px; margin: 0 auto 0.5rem; }
+.rsvp-intro { text-align: center; color: var(--sage); max-width: 480px; margin: 0 auto 1.4rem; line-height: 1.8; }
 .rsvp-deadline { text-align: center; color: var(--olive); font-weight: 700; margin-bottom: 2rem; }
 .form {
   display: flex; flex-direction: column; gap: 1.1rem;
@@ -499,6 +524,125 @@ section {
   background: repeating-linear-gradient(45deg, rgba(129,160,98,0.08), rgba(129,160,98,0.08) 12px, rgba(129,160,98,0.14) 12px, rgba(129,160,98,0.14) 24px);
   color: var(--sage); border: 1px dashed rgba(129,160,98,0.5);
   font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; text-align: center;
+}
+
+/* ============================================================
+   SOBRE DE APERTURA (pantalla de inicio)
+   ============================================================ */
+.envelope-overlay {
+  position: fixed; inset: 0; z-index: 200;
+  display: grid; place-items: center;
+  background:
+    radial-gradient(120% 80% at 50% -10%, rgba(129, 160, 98, 0.10), transparent 60%),
+    var(--cream);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.envelope {
+  position: relative;
+  width: min(82vw, 400px);
+  aspect-ratio: 10 / 7;
+  filter: drop-shadow(0 30px 50px rgba(71, 90, 41, 0.25));
+  perspective: 1000px;
+}
+/* cuerpo del sobre */
+.env-body {
+  position: absolute; inset: 0;
+  background: linear-gradient(160deg, var(--beige-soft), var(--beige));
+  border-radius: 10px;
+  overflow: hidden;
+}
+/* bolsillo frontal: pliegues laterales e inferior, tapa la carta cerrada */
+.env-front {
+  position: absolute; inset: 0;
+  z-index: 2;
+  border-radius: 10px;
+  overflow: hidden;
+  pointer-events: none;
+}
+/* todo el frente salvo el triángulo donde asienta la solapa */
+.env-front::before {
+  content: "";
+  position: absolute; inset: 0;
+  background: linear-gradient(160deg, var(--beige-deep) 0%, var(--beige) 55%, var(--beige-soft) 100%);
+  clip-path: polygon(0 0, 50% 50%, 100% 0, 100% 100%, 0 100%);
+}
+/* pliegue inferior, para dar profundidad */
+.env-front::after {
+  content: "";
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, var(--beige-deep), var(--beige));
+  clip-path: polygon(0 100%, 100% 100%, 50% 46%);
+  opacity: 0.5;
+}
+/* carta guardada dentro del sobre */
+.env-letter {
+  position: absolute;
+  left: 6%; right: 6%; top: 8%; bottom: 14%;
+  background: #fffdf8;
+  border-radius: 6px;
+  box-shadow: 0 8px 24px -12px rgba(71, 90, 41, 0.4);
+  display: grid; place-items: center;
+  text-align: center;
+  padding: 1rem;
+}
+.env-letter .env-letter-names {
+  font-family: var(--font-script), cursive;
+  color: var(--olive);
+  font-size: clamp(1.6rem, 7vw, 2.2rem);
+  line-height: 1.15;
+}
+.env-letter .env-letter-date {
+  color: var(--sage);
+  font-size: 0.7rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-top: 0.5rem;
+}
+/* solapa superior */
+.env-flap {
+  position: absolute; left: 0; right: 0; top: 0; height: 54%;
+  background: linear-gradient(to bottom, var(--beige-soft) 0%, var(--beige-deep) 85%);
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  transform-origin: top center;
+  border-radius: 10px 10px 0 0;
+  z-index: 3;
+  backface-visibility: hidden;
+  filter: drop-shadow(0 4px 6px rgba(71, 90, 41, 0.22));
+}
+/* sello con monograma */
+.env-seal {
+  position: absolute; left: 50%; top: 50%;
+  /* el centrado (x/y) lo maneja framer-motion en el componente */
+  width: clamp(68px, 19vw, 88px);
+  height: clamp(68px, 19vw, 88px);
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, var(--sage), var(--olive) 70%);
+  color: var(--cream);
+  display: flex; align-items: center; justify-content: center;
+  white-space: nowrap;
+  line-height: 1;
+  font-family: var(--font-script), cursive;
+  font-size: clamp(1.4rem, 5vw, 1.8rem);
+  z-index: 4;
+  box-shadow: 0 6px 16px -6px rgba(53, 68, 31, 0.6), inset 0 0 0 3px rgba(247, 245, 240, 0.35);
+}
+.env-hint {
+  position: absolute;
+  bottom: clamp(2rem, 8vh, 3.5rem);
+  left: 50%; transform: translateX(-50%);
+  color: var(--sage);
+  font-size: 0.7rem;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  font-weight: 700;
+  animation: pulse-hint 2.2s ease-in-out infinite;
+  white-space: nowrap;
+}
+@keyframes pulse-hint {
+  0%, 100% { opacity: 0.55; }
+  50% { opacity: 1; }
 }
 
 /* ---------- Reduced motion ---------- */

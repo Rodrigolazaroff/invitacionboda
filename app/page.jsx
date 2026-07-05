@@ -1,3 +1,4 @@
+import Envelope from "@/components/Envelope";
 import Cover from "@/components/Cover";
 import Countdown from "@/components/Countdown";
 import Venue from "@/components/Venue";
@@ -11,6 +12,7 @@ import { venues, photos } from "@/lib/data";
 export default function Home() {
   return (
     <main className="shell">
+      <Envelope />
       <Cover />
       <Countdown />
       <Venue venue={venues.ceremony} side="left" />

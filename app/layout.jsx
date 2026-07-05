@@ -1,4 +1,4 @@
-import { Lato, Parisienne } from "next/font/google";
+import { Lato, Great_Vibes } from "next/font/google";
 import "./globals.css";
 
 const lato = Lato({
@@ -8,7 +8,8 @@ const lato = Lato({
   display: "swap",
 });
 
-const parisienne = Parisienne({
+// Sustituto libre de Snell Roundhand LT Std Bold (fuente comercial del diseño)
+const greatVibes = Great_Vibes({
   subsets: ["latin"],
   weight: ["400"],
   variable: "--font-script",
@@ -68,7 +69,7 @@ export const viewport = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="es-AR" className={`${lato.variable} ${parisienne.variable}`}>
+    <html lang="es-AR" className={`${lato.variable} ${greatVibes.variable}`}>
       <body>{children}</body>
     </html>
   );

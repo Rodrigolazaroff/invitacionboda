@@ -1,7 +1,6 @@
 "use client";
 
 import { motion } from "framer-motion";
-import Botanical from "./Botanical";
 import { couple, event } from "@/lib/data";
 
 const rise = {
@@ -16,11 +15,6 @@ const rise = {
 export default function Cover() {
   return (
     <section className="cover">
-      <Botanical side="left" width="clamp(150px, 44vw, 230px)" style={{ top: -20, left: -55 }} />
-      <Botanical side="right" width="clamp(150px, 44vw, 230px)" style={{ top: -30, right: -55 }} />
-      <Botanical side="right" width="clamp(108px, 31vw, 175px)" style={{ bottom: -22, left: -42 }} flip />
-      <Botanical side="left" width="clamp(108px, 31vw, 175px)" style={{ bottom: -28, right: -42 }} flip />
-
       <div className="inner">
         <motion.div className="cover-monogram" custom={0} variants={rise} initial="hidden" animate="show">
           {couple.monogram.left}
@@ -28,7 +22,7 @@ export default function Cover() {
           {couple.monogram.right}
         </motion.div>
 
-        <motion.p className="cover-sub" custom={1} variants={rise} initial="hidden" animate="show">
+        <motion.p className="nos-casamos" custom={1} variants={rise} initial="hidden" animate="show">
           ¡Nos casamos!
         </motion.p>
 

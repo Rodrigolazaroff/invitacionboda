@@ -1,9 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { Gift, Copy, Check, Wallet, Landmark } from "lucide-react";
+import { Copy, Check, Wallet, Landmark } from "lucide-react";
 import Reveal from "./Reveal";
-import Botanical from "./Botanical";
 import { gifts } from "@/lib/data";
 
 const BADGES = { mp: Wallet, usd: Landmark };
@@ -42,11 +41,14 @@ function CopyRow({ field }) {
 export default function Gifts() {
   return (
     <section>
-      <Botanical side="left" width={150} style={{ bottom: 20, left: -40, opacity: 0.85 }} flip />
       <div className="inner">
         <Reveal>
           <h2 className="section-title">
-            <Gift size={30} style={{ verticalAlign: "-4px", marginRight: 8, color: "var(--blush)" }} />
+            <img
+              src="/assets/icons/regalo.webp"
+              alt=""
+              style={{ width: 44, height: 44, verticalAlign: "-8px", marginRight: 10 }}
+            />
             Regalos
           </h2>
           <div className="divider">❦</div>

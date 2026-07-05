@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { Heart, Send, Loader2 } from "lucide-react";
 import Reveal from "./Reveal";
-import Botanical from "./Botanical";
 import { rsvp } from "@/lib/data";
 
 export default function Rsvp() {
@@ -46,7 +45,6 @@ export default function Rsvp() {
 
   return (
     <section id="confirmar">
-      <Botanical side="right" width={150} style={{ top: 10, right: -40, opacity: 0.85 }} />
       <div className="inner">
         <Reveal>
           <h2 className="section-title">Confirmación de asistencia</h2>
