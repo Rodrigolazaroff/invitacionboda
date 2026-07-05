@@ -605,96 +605,6 @@ section {
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
 }
-.envelope {
-  position: relative;
-  width: min(82vw, 400px);
-  aspect-ratio: 10 / 7;
-  filter: drop-shadow(0 30px 50px rgba(71, 90, 41, 0.25));
-  perspective: 1000px;
-}
-/* cuerpo del sobre */
-.env-body {
-  position: absolute; inset: 0;
-  background: linear-gradient(160deg, var(--beige-soft), var(--beige));
-  border-radius: 10px;
-  overflow: hidden;
-}
-/* bolsillo frontal: pliegues laterales e inferior, tapa la carta cerrada */
-.env-front {
-  position: absolute; inset: 0;
-  z-index: 2;
-  border-radius: 10px;
-  overflow: hidden;
-  pointer-events: none;
-}
-/* todo el frente salvo el triángulo donde asienta la solapa */
-.env-front::before {
-  content: "";
-  position: absolute; inset: 0;
-  background: linear-gradient(160deg, var(--beige-deep) 0%, var(--beige) 55%, var(--beige-soft) 100%);
-  clip-path: polygon(0 0, 50% 50%, 100% 0, 100% 100%, 0 100%);
-}
-/* pliegue inferior, para dar profundidad */
-.env-front::after {
-  content: "";
-  position: absolute; inset: 0;
-  background: linear-gradient(to top, var(--beige-deep), var(--beige));
-  clip-path: polygon(0 100%, 100% 100%, 50% 46%);
-  opacity: 0.5;
-}
-/* carta guardada dentro del sobre */
-.env-letter {
-  position: absolute;
-  left: 6%; right: 6%; top: 8%; bottom: 14%;
-  background: #fffdf8;
-  border-radius: 6px;
-  box-shadow: 0 8px 24px -12px rgba(71, 90, 41, 0.4);
-  display: grid; place-items: center;
-  text-align: center;
-  padding: 1rem;
-}
-.env-letter .env-letter-logo {
-  width: clamp(140px, 42vw, 200px);
-  height: auto;
-  display: block;
-  margin: 0 auto;
-}
-.env-letter .env-letter-date {
-  color: var(--sage);
-  font-size: 0.7rem;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  font-weight: 700;
-  margin-top: 0.5rem;
-}
-/* solapa superior */
-.env-flap {
-  position: absolute; left: 0; right: 0; top: 0; height: 54%;
-  background: linear-gradient(to bottom, var(--beige-soft) 0%, var(--beige-deep) 85%);
-  clip-path: polygon(0 0, 100% 0, 50% 100%);
-  transform-origin: top center;
-  border-radius: 10px 10px 0 0;
-  z-index: 3;
-  backface-visibility: hidden;
-  filter: drop-shadow(0 4px 6px rgba(71, 90, 41, 0.22));
-}
-/* sello con monograma */
-.env-seal {
-  position: absolute; left: 50%; top: 50%;
-  /* el centrado (x/y) lo maneja framer-motion en el componente */
-  width: clamp(68px, 19vw, 88px);
-  height: clamp(68px, 19vw, 88px);
-  border-radius: 50%;
-  background: radial-gradient(circle at 35% 30%, var(--sage), var(--olive) 70%);
-  color: var(--cream);
-  display: flex; align-items: center; justify-content: center;
-  white-space: nowrap;
-  line-height: 1;
-  font-family: var(--font-script), cursive;
-  font-size: clamp(1.4rem, 5vw, 1.8rem);
-  z-index: 4;
-  box-shadow: 0 6px 16px -6px rgba(53, 68, 31, 0.6), inset 0 0 0 3px rgba(247, 245, 240, 0.35);
-}
 .env-hint {
   position: absolute;
   bottom: clamp(2rem, 8vh, 3.5rem);
@@ -711,6 +621,34 @@ section {
   0%, 100% { opacity: 0.55; }
   50% { opacity: 1; }
 }
+/* video del sobre abriéndose (pantalla de inicio) */
+.envelope-overlay.video-mode { background: #000; }
+.env-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* botón flotante para silenciar / activar la música */
+.music-toggle {
+  position: fixed;
+  right: clamp(1rem, 4vw, 1.5rem);
+  bottom: clamp(1rem, 4vw, 1.5rem);
+  z-index: 150;
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  display: grid; place-items: center;
+  color: var(--cream);
+  background: radial-gradient(circle at 35% 30%, var(--sage), var(--olive) 75%);
+  box-shadow: 0 6px 16px -6px rgba(53, 68, 31, 0.6);
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+.music-toggle:hover { transform: scale(1.06); }
+.music-toggle:active { transform: scale(0.94); }
 
 /* ---------- Reduced motion ---------- */
 @media (prefers-reduced-motion: reduce) {

@@ -1,5 +1,6 @@
 import { Lato, Great_Vibes } from "next/font/google";
 import "./globals.css";
+import MusicProvider from "@/components/MusicProvider";
 
 const lato = Lato({
   subsets: ["latin"],
@@ -70,7 +71,9 @@ export const viewport = {
 export default function RootLayout({ children }) {
   return (
     <html lang="es-AR" className={`${lato.variable} ${greatVibes.variable}`}>
-      <body>{children}</body>
+      <body>
+        <MusicProvider>{children}</MusicProvider>
+      </body>
     </html>
   );
 }
