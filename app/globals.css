@@ -238,6 +238,39 @@ section {
 @keyframes bob { 0%,100% { transform: translateY(0); opacity: 0.5; } 50% { transform: translateY(6px); opacity: 1; } }
 
 /* ============================================================
+   FOTO A PÁGINA COMPLETA (como la tarjeta)
+   ============================================================ */
+.photo-full {
+  padding: 0;
+}
+.photo-full img {
+  display: block;
+  width: 100%;
+  max-height: 92dvh;
+  object-fit: cover;
+}
+
+/* ---------- Chips de fecha (Sábado | Dic, 12 2026 | 18hs) ---------- */
+.date-chips {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2.4rem;
+}
+.date-chips > div {
+  padding: 0.5rem 1.4rem;
+  border-left: 1px solid var(--sage-soft);
+  color: var(--olive);
+  font-weight: 700;
+  font-size: 0.82rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  line-height: 1.5;
+  white-space: nowrap;
+}
+.date-chips > div:first-child { border-left: none; }
+
+/* ============================================================
    COUNTDOWN
    ============================================================ */
 .countdown {

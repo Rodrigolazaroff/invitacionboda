@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { couple, event } from "@/lib/data";
+import { couple } from "@/lib/data";
 
 const rise = {
   hidden: { opacity: 0, y: 24 },
@@ -12,6 +12,7 @@ const rise = {
   }),
 };
 
+// Página 1 de la tarjeta: solo el logo N&R con "¡Nos casamos!"
 export default function Cover() {
   return (
     <section className="cover">
@@ -28,18 +29,6 @@ export default function Cover() {
 
         <motion.p className="nos-casamos" custom={1} variants={rise} initial="hidden" animate="show">
           ¡Nos casamos!
-        </motion.p>
-
-        <motion.h1 className="cover-names" custom={2} variants={rise} initial="hidden" animate="show">
-          {couple.bride}
-          <br />
-          <span style={{ fontSize: "0.55em", color: "var(--sage)" }}>&amp;</span>
-          <br />
-          {couple.groom}
-        </motion.h1>
-
-        <motion.p className="cover-date" custom={3} variants={rise} initial="hidden" animate="show">
-          {event.dateLabel} · {event.city}
         </motion.p>
       </div>
 

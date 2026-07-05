@@ -14,12 +14,14 @@ export default function Rsvp() {
     e.preventDefault();
     setStatus("loading");
     const form = e.currentTarget;
+    // Ojo: si no asiste, los campos acompañantes/restricciones no existen
+    // en el DOM (render condicional) — leerlos directo rompía el envío.
     const payload = {
       nombre: form.nombre.value.trim(),
       invitadoDe: invitadoDe === "novio" ? "Novio" : "Novia",
       asiste: attending === "si" ? "Sí" : "No",
-      acompanantes: form.acompanantes.value,
-      restricciones: form.restricciones.value.trim(),
+      acompanantes: attending === "si" ? form.acompanantes.value : "0",
+      restricciones: attending === "si" ? form.restricciones.value : "",
       mensaje: form.mensaje.value.trim(),
       fecha: new Date().toLocaleString("es-AR"),
     };

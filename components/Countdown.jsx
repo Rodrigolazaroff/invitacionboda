@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Reveal from "./Reveal";
-import { event, photos } from "@/lib/data";
+import { event } from "@/lib/data";
 
 function diff(target) {
   const ms = Math.max(0, target - Date.now());
@@ -59,12 +59,6 @@ export default function Countdown() {
 
         <Reveal delay={0.2}>
           <div className="divider" style={{ marginTop: "3rem" }}>❦</div>
-          <img
-            src={photos.cover}
-            alt="Nahiara y Rodrigo"
-            className="venue-photo"
-            style={{ maxWidth: 360, aspectRatio: "3 / 4", marginTop: "1.5rem" }}
-          />
         </Reveal>
       </div>
     </section>
