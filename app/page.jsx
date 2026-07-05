@@ -11,24 +11,23 @@ import Gifts from "@/components/Gifts";
 import Closing from "@/components/Closing";
 import { photos } from "@/lib/data";
 
-// Secuencia de la tarjeta original:
-// logo → foto → nombres + iglesia (flores) → ceremonia y fiesta (foto + flores)
-// → itinerario → confirmación → galería → regalos
+// Secuencia pedida:
+// 1. logo (Cover) → 2. foto + countdown → 3. iglesia → 4. ceremonia y fiesta
+// → 5. itinerario → 6+6.5. confirmación → 7. galería → 8. regalos → 9. cierre
 export default function Home() {
   return (
     <main className="shell">
       <Envelope />
       <Cover />
       <PhotoFull src={photos.cover} />
-      <ChurchSection />
       <Countdown />
+      <ChurchSection />
       <PartySection />
       <Itinerary />
       <Rsvp />
       <Gallery />
       <Gifts />
       <Closing />
-      <p className="footer-credit">Hecho con cariño para Nahiara &amp; Rodrigo · 12·12·2026</p>
     </main>
   );
 }

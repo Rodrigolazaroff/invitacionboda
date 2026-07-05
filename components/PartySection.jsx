@@ -1,24 +1,45 @@
 "use client";
 
 import { Navigation } from "lucide-react";
+import { motion } from "framer-motion";
 import Reveal from "./Reveal";
-import Botanical from "./Botanical";
 import { event, venues, photos } from "@/lib/data";
 
-// Página 4 de la tarjeta: foto + "Ceremonia y Fiesta" + flores abajo a la derecha
+const florAnim = {
+  initial: { opacity: 0, scale: 0.85 },
+  whileInView: { opacity: 0.95, scale: 1 },
+  viewport: { once: true, margin: "-40px" },
+  transition: { duration: 1.2, ease: [0.22, 1, 0.36, 1] },
+};
+
+// Sección 4: foto + "Ceremonia y Fiesta" — flor solo abajo a la derecha
 export default function PartySection() {
   const v = venues.party;
   return (
     <section style={{ overflow: "hidden", paddingTop: 0 }}>
-      <Botanical side="right" width="clamp(130px, 36vw, 200px)" style={{ bottom: -75, right: -50 }} flip />
+      {/* Flor solo abajo derecha */}
+      <motion.img
+        src="/assets/botanical/florabajoderecha.png"
+        alt=""
+        aria-hidden="true"
+        draggable={false}
+        className="sprig"
+        style={{
+          bottom: -10,
+          right: -10,
+          width: "clamp(140px, 38vw, 210px)",
+        }}
+        {...florAnim}
+      />
 
+      {/* Foto primero */}
       <div className="photo-full" style={{ marginBottom: "2.8rem" }}>
         <Reveal>
           <img src={photos.party} alt="Nahiara y Rodrigo" />
         </Reveal>
       </div>
 
-      <div className="inner" style={{ textAlign: "center" }}>
+      <div className="inner" style={{ textAlign: "center", paddingBottom: "3.5rem" }}>
         <Reveal>
           <h2 className="section-title">Ceremonia y Fiesta</h2>
         </Reveal>

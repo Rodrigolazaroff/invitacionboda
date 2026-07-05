@@ -2,8 +2,16 @@
 
 import { useState } from "react";
 import { Heart, Send, Loader2 } from "lucide-react";
+import { motion } from "framer-motion";
 import Reveal from "./Reveal";
 import { rsvp } from "@/lib/data";
+
+const florAnim = {
+  initial: { opacity: 0, scale: 0.85 },
+  whileInView: { opacity: 0.95, scale: 1 },
+  viewport: { once: true, margin: "-40px" },
+  transition: { duration: 1.2, ease: [0.22, 1, 0.36, 1] },
+};
 
 export default function Rsvp() {
   const [status, setStatus] = useState("idle"); // idle | loading | ok | error
@@ -14,8 +22,6 @@ export default function Rsvp() {
     e.preventDefault();
     setStatus("loading");
     const form = e.currentTarget;
-    // Ojo: si no asiste, los campos acompañantes/restricciones no existen
-    // en el DOM (render condicional) — leerlos directo rompía el envío.
     const payload = {
       nombre: form.nombre.value.trim(),
       invitadoDe: invitadoDe === "novio" ? "Novio" : "Novia",
@@ -25,8 +31,6 @@ export default function Rsvp() {
       mensaje: form.mensaje.value.trim(),
       fecha: new Date().toLocaleString("es-AR"),
     };
-    // Timeout de red: si en 10s no hubo respuesta, cortamos y mostramos error
-    // en vez de dejar el botón clavado en "Enviando…".
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 10000);
     try {
@@ -46,41 +50,78 @@ export default function Rsvp() {
   }
 
   return (
-    <section id="confirmar">
-      <div className="inner">
-        <Reveal>
-          <h2 className="section-title">Confirmación de asistencia</h2>
-          <div className="divider">❦</div>
-        </Reveal>
+    <>
+      {/* ── Sección 6: intro con flores (título + texto + fecha) ── */}
+      <section id="confirmar" style={{ overflow: "hidden" }}>
+        {/* Flor arriba izquierda */}
+        <motion.img
+          src="/assets/botanical/florarribaizquierda.png"
+          alt=""
+          aria-hidden="true"
+          draggable={false}
+          className="sprig"
+          style={{
+            top: -10,
+            left: -10,
+            width: "clamp(120px, 32vw, 180px)",
+          }}
+          {...florAnim}
+        />
+        {/* Flor abajo derecha */}
+        <motion.img
+          src="/assets/botanical/florabajoderecha.png"
+          alt=""
+          aria-hidden="true"
+          draggable={false}
+          className="sprig"
+          style={{
+            bottom: -10,
+            right: -10,
+            width: "clamp(140px, 38vw, 210px)",
+          }}
+          {...florAnim}
+        />
 
-        {status === "ok" ? (
+        <div className="inner" style={{ padding: "3.5rem 2rem 1.5rem" }}>
           <Reveal>
-            <div className="card rsvp-success">
-              <Heart size={40} className="heart" fill="currentColor" />
-              {attending === "si" ? (
-                <>
-                  <h3 style={{ color: "var(--olive)", fontSize: "1.3rem" }}>¡Gracias por confirmar!</h3>
-                  <p style={{ color: "var(--sage)" }}>
-                    Recibimos tu respuesta. ¡Nos vemos el 12 de diciembre! 🌿
-                  </p>
-                </>
-              ) : (
-                <>
-                  <h3 style={{ color: "var(--olive)", fontSize: "1.3rem" }}>¡Gracias por avisarnos!</h3>
-                  <p style={{ color: "var(--sage)" }}>
-                    Lamentamos que no puedas acompañarnos. ¡Te vamos a extrañar! 💛
-                  </p>
-                </>
-              )}
-            </div>
+            <h2 className="section-title">Confirmación de asistencia</h2>
+            <div className="divider">❦</div>
           </Reveal>
-        ) : (
-          <>
-            <Reveal delay={0.05}>
-              <p className="rsvp-intro">{rsvp.intro}</p>
-              <p className="rsvp-deadline">Por favor, confirmá antes del {rsvp.deadlineLabel}.</p>
-            </Reveal>
 
+          <Reveal delay={0.05}>
+            <p className="rsvp-intro">{rsvp.intro}</p>
+            <p className="rsvp-deadline">Por favor, confirmá antes del {rsvp.deadlineLabel}.</p>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ── Sección 6.5: formulario (sin flores) ── */}
+      <section style={{ paddingTop: 0 }}>
+        <div className="inner">
+          {status === "ok" ? (
+            <Reveal>
+              <div className="card rsvp-success">
+                {attending === "si" && (
+                  <Heart size={40} className="heart" fill="currentColor" />
+                )}
+                {attending === "si" ? (
+                  <>
+                    <h3 style={{ color: "var(--olive)", fontSize: "1.3rem" }}>¡Gracias por confirmar!</h3>
+                    <p style={{ color: "var(--sage)" }}>
+                      Recibimos tu respuesta. ¡Nos vemos el 12 de diciembre! 🌿
+                    </p>
+                  </>
+                ) : (
+                  <>
+                    <h3 style={{ color: "var(--olive)", fontSize: "1.3rem" }}>¡Gracias por avisarnos!</h3>
+                    <p style={{ color: "var(--sage)" }}>
+                      Lamentamos que no puedas acompañarnos. ¡Te vamos a extrañar!
+                    </p>
+                  </>
+                )}
+              </div>
+            </Reveal>
+          ) : (
             <Reveal delay={0.1}>
               <form className="form card" onSubmit={onSubmit}>
                 <div className="field">
@@ -195,20 +236,20 @@ export default function Rsvp() {
                 )}
               </form>
             </Reveal>
-          </>
-        )}
-      </div>
+          )}
+        </div>
 
-      <style jsx>{`
-        .spin {
-          animation: spin 0.9s linear infinite;
-        }
-        @keyframes spin {
-          to {
-            transform: rotate(360deg);
+        <style jsx>{`
+          .spin {
+            animation: spin 0.9s linear infinite;
           }
-        }
-      `}</style>
-    </section>
+          @keyframes spin {
+            to {
+              transform: rotate(360deg);
+            }
+          }
+        `}</style>
+      </section>
+    </>
   );
 }

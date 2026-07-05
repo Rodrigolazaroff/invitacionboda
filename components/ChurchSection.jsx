@@ -1,20 +1,52 @@
 "use client";
 
 import { Navigation } from "lucide-react";
+import { motion } from "framer-motion";
 import Reveal from "./Reveal";
-import Botanical from "./Botanical";
 import { couple, event, venues } from "@/lib/data";
 
-// Página 3 de la tarjeta: nombres + iglesia, con flores en las esquinas
+const florAnim = {
+  initial: { opacity: 0, scale: 0.85 },
+  whileInView: { opacity: 0.95, scale: 1 },
+  viewport: { once: true, margin: "-40px" },
+  transition: { duration: 1.2, ease: [0.22, 1, 0.36, 1] },
+};
+
+// Sección 3: Iglesia — flores propias arriba-izq y abajo-der, sin superposición
 export default function ChurchSection() {
   const v = venues.ceremony;
   return (
     <section style={{ overflow: "hidden" }}>
-      <Botanical side="left" width="clamp(150px, 42vw, 230px)" style={{ top: -25, left: -50 }} />
-      <Botanical side="right" width="clamp(110px, 30vw, 170px)" style={{ bottom: -25, right: -45 }} flip />
-      <Botanical side="left" width="clamp(110px, 30vw, 170px)" style={{ bottom: -30, left: -45 }} flip />
+      {/* Flor arriba izquierda */}
+      <motion.img
+        src="/assets/botanical/florarribaizquierda.png"
+        alt=""
+        aria-hidden="true"
+        draggable={false}
+        className="sprig"
+        style={{
+          top: -10,
+          left: -10,
+          width: "clamp(120px, 32vw, 180px)",
+        }}
+        {...florAnim}
+      />
+      {/* Flor abajo derecha */}
+      <motion.img
+        src="/assets/botanical/florabajoderecha.png"
+        alt=""
+        aria-hidden="true"
+        draggable={false}
+        className="sprig"
+        style={{
+          bottom: -10,
+          right: -10,
+          width: "clamp(140px, 38vw, 210px)",
+        }}
+        {...florAnim}
+      />
 
-      <div className="inner" style={{ textAlign: "center" }}>
+      <div className="inner" style={{ textAlign: "center", padding: "3.5rem 2rem" }}>
         <Reveal>
           <h2 className="cover-names" style={{ marginTop: 0 }}>
             {couple.bride}
