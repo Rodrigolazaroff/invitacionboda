@@ -259,8 +259,9 @@ section {
   width: 100%;
   max-height: 92dvh;
   object-fit: cover;
-  border-radius: 16px;
 }
+/* solo la foto de Ceremonia y Fiesta va con esquinas redondeadas */
+.photo-full.photo-rounded img { border-radius: 16px; }
 
 /* ---------- Chips de fecha (Sábado | Dic, 12 2026 | 18hs) ---------- */
 .date-chips {

@@ -33,7 +33,7 @@ export default function PartySection() {
       />
 
       {/* Foto primero */}
-      <div className="photo-full" style={{ marginBottom: "2.8rem" }}>
+      <div className="photo-full photo-rounded" style={{ marginBottom: "2.8rem" }}>
         <Reveal>
           <img src={photos.party} alt="Nahiara y Rodrigo" />
         </Reveal>
