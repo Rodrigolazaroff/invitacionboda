@@ -48,9 +48,11 @@ export default function Envelope() {
             transition={{ duration: 0.9, delay: open ? 0.45 : 0, ease: [0.22, 1, 0.36, 1] }}
           >
             <div>
-              <div className="env-letter-names">
-                {couple.bride} &amp; {couple.groom}
-              </div>
+              <img
+                src="/assets/logo/logo.webp"
+                alt={`${couple.bride} & ${couple.groom}`}
+                className="env-letter-logo"
+              />
               <div className="env-letter-date">
                 {event.dayNumber} · {event.monthShort} · {event.year}
               </div>

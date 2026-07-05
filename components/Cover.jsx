@@ -16,11 +16,15 @@ export default function Cover() {
   return (
     <section className="cover">
       <div className="inner">
-        <motion.div className="cover-monogram" custom={0} variants={rise} initial="hidden" animate="show">
-          {couple.monogram.left}
-          <span className="amp">&amp;</span>
-          {couple.monogram.right}
-        </motion.div>
+        <motion.img
+          src="/assets/logo/logo.webp"
+          alt={`${couple.monogram.left}&${couple.monogram.right}`}
+          className="cover-logo"
+          custom={0}
+          variants={rise}
+          initial="hidden"
+          animate="show"
+        />
 
         <motion.p className="nos-casamos" custom={1} variants={rise} initial="hidden" animate="show">
           ¡Nos casamos!

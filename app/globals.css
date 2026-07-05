@@ -174,20 +174,11 @@ section {
   text-align: center;
   overflow: hidden;
 }
-.cover-monogram {
-  font-family: var(--font-script), cursive;
-  color: var(--olive);
-  font-size: clamp(5rem, 22vw, 9rem);
-  line-height: 0.8;
-  position: relative;
-  z-index: 3;
-  text-shadow: 0 0 14px var(--cream), 0 0 26px var(--cream);
-}
-.cover-monogram .amp {
-  font-size: 0.5em;
-  color: var(--sage);
-  vertical-align: middle;
-  margin: 0 -0.06em;
+.cover-logo {
+  width: clamp(220px, 62vw, 340px);
+  height: auto;
+  display: block;
+  margin: 0 auto;
 }
 .cover-sub {
   font-family: var(--font-script), cursive;
@@ -586,11 +577,11 @@ section {
   text-align: center;
   padding: 1rem;
 }
-.env-letter .env-letter-names {
-  font-family: var(--font-script), cursive;
-  color: var(--olive);
-  font-size: clamp(1.6rem, 7vw, 2.2rem);
-  line-height: 1.15;
+.env-letter .env-letter-logo {
+  width: clamp(140px, 42vw, 200px);
+  height: auto;
+  display: block;
+  margin: 0 auto;
 }
 .env-letter .env-letter-date {
   color: var(--sage);
