@@ -19,6 +19,7 @@ export async function POST(request) {
   // Payload limpio hacia la planilla
   const row = {
     nombre,
+    invitadoDe: (data.invitadoDe || "").toString(),
     asiste: (data.asiste || "").toString(),
     acompanantes: (data.acompanantes || "").toString(),
     restricciones: (data.restricciones || "").toString(),
@@ -34,16 +35,27 @@ export async function POST(request) {
     return Response.json({ ok: true, dev: true });
   }
 
+  // Timeout para que la request nunca quede colgada si Google tarda.
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 8000);
+
   try {
+    // Apps Script espera un cuerpo simple; text/plain evita el preflight CORS
+    // y sigue llegando como e.postData.contents (JSON string) al script.
     const res = await fetch(webhook, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
       body: JSON.stringify(row),
+      redirect: "follow",
+      signal: controller.signal,
     });
     if (!res.ok) throw new Error(`Sheet respondió ${res.status}`);
     return Response.json({ ok: true });
   } catch (err) {
-    console.error("[RSVP] error al guardar en Sheet:", err);
+    const motivo = err?.name === "AbortError" ? "timeout" : String(err);
+    console.error("[RSVP] error al guardar en Sheet:", motivo);
     return Response.json({ ok: false, error: "No se pudo guardar" }, { status: 502 });
+  } finally {
+    clearTimeout(timeout);
   }
 }

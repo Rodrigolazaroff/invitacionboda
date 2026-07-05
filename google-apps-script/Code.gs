@@ -15,7 +15,7 @@
  * La primera vez te va a pedir autorizar permisos: aceptá.
  */
 
-var HEADERS = ["Fecha", "Nombre", "Asiste", "Acompañantes", "Restricciones", "Mensaje"];
+var HEADERS = ["Fecha", "Invitado de", "Nombre", "Asiste", "Acompañantes", "Restricciones", "Mensaje"];
 
 function doPost(e) {
   try {
@@ -30,6 +30,7 @@ function doPost(e) {
 
     sheet.appendRow([
       data.fecha || new Date().toLocaleString("es-AR"),
+      data.invitadoDe || "",
       data.nombre || "",
       data.asiste || "",
       data.acompanantes || "",

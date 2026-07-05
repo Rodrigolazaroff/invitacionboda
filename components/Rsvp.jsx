@@ -9,6 +9,7 @@ import { rsvp } from "@/lib/data";
 export default function Rsvp() {
   const [status, setStatus] = useState("idle"); // idle | loading | ok | error
   const [attending, setAttending] = useState("si");
+  const [invitadoDe, setInvitadoDe] = useState("novio");
 
   async function onSubmit(e) {
     e.preventDefault();
@@ -16,22 +17,30 @@ export default function Rsvp() {
     const form = e.currentTarget;
     const payload = {
       nombre: form.nombre.value.trim(),
+      invitadoDe: invitadoDe === "novio" ? "Novio" : "Novia",
       asiste: attending === "si" ? "Sí" : "No",
       acompanantes: form.acompanantes.value,
       restricciones: form.restricciones.value.trim(),
       mensaje: form.mensaje.value.trim(),
       fecha: new Date().toLocaleString("es-AR"),
     };
+    // Timeout de red: si en 10s no hubo respuesta, cortamos y mostramos error
+    // en vez de dejar el botón clavado en "Enviando…".
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 10000);
     try {
       const res = await fetch("/api/rsvp", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
+        signal: controller.signal,
       });
       if (!res.ok) throw new Error("bad status");
       setStatus("ok");
     } catch {
       setStatus("error");
+    } finally {
+      clearTimeout(timeout);
     }
   }
 
@@ -48,10 +57,21 @@ export default function Rsvp() {
           <Reveal>
             <div className="card rsvp-success">
               <Heart size={40} className="heart" fill="currentColor" />
-              <h3 style={{ color: "var(--olive)", fontSize: "1.3rem" }}>¡Gracias por confirmar!</h3>
-              <p style={{ color: "var(--sage)" }}>
-                Recibimos tu respuesta. ¡Nos vemos el 12 de diciembre! 🌿
-              </p>
+              {attending === "si" ? (
+                <>
+                  <h3 style={{ color: "var(--olive)", fontSize: "1.3rem" }}>¡Gracias por confirmar!</h3>
+                  <p style={{ color: "var(--sage)" }}>
+                    Recibimos tu respuesta. ¡Nos vemos el 12 de diciembre! 🌿
+                  </p>
+                </>
+              ) : (
+                <>
+                  <h3 style={{ color: "var(--olive)", fontSize: "1.3rem" }}>¡Gracias por avisarnos!</h3>
+                  <p style={{ color: "var(--sage)" }}>
+                    Lamentamos que no puedas acompañarnos. ¡Te vamos a extrañar! 💛
+                  </p>
+                </>
+              )}
             </div>
           </Reveal>
         ) : (
@@ -66,6 +86,32 @@ export default function Rsvp() {
                 <div className="field">
                   <label htmlFor="nombre">Nombre y apellido</label>
                   <input id="nombre" name="nombre" required placeholder="Tu nombre completo" />
+                </div>
+
+                <div className="field">
+                  <label>Sos invitado de:</label>
+                  <div className="radio-row">
+                    <label>
+                      <input
+                        type="radio"
+                        name="invitadoDe"
+                        value="novio"
+                        checked={invitadoDe === "novio"}
+                        onChange={() => setInvitadoDe("novio")}
+                      />
+                      <span>Novio</span>
+                    </label>
+                    <label>
+                      <input
+                        type="radio"
+                        name="invitadoDe"
+                        value="novia"
+                        checked={invitadoDe === "novia"}
+                        onChange={() => setInvitadoDe("novia")}
+                      />
+                      <span>Novia</span>
+                    </label>
+                  </div>
                 </div>
 
                 <div className="field">
